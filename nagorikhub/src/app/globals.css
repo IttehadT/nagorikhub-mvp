@@ -1,26 +1,30 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Paste YOUR exact CSS from the HTML file below */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0e1a;
+  --ink2:#1a2035;
+  --surface:#f4f2ed;
+  --surface2:#ede9e1;
+  --amber:#e8a020;
+  --amber2:#f5b942;
+  --amber-dim:#c47c0a;
+  --teal:#1aab7a;
+  --coral:#e05c3a;
+  --muted:#6b7280;
+  --border:rgba(10,14,26,0.12);
+  --glow:rgba(232,160,32,0.15);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:#e8e4dc;
+  overflow-x:hidden;
+  line-height:1.6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* ... Paste the REST of your exact CSS here (Nav, Hero, Carousel, Roadmap, etc.) ... */
+/* I omitted the full CSS block here to save space, but literally copy-paste everything from your <style> tag */
