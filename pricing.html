@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - NagorikHub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Wrapper to push content below the fixed navbar */
+        .page-wrapper {
+            padding-top: 120px;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Center-aligned header for the pricing page */
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        /* CSS Grid to place the 3 pricing cards side-by-side */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            align-items: center; /* Aligns cards vertically */
+        }
+
+        /* Base styling for all pricing cards */
+        .pricing-card {
+            background: rgba(26, 32, 53, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Hover effect to make cards feel interactive */
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Highlight styling for the middle "Popular" card */
+        .pricing-card.popular {
+            background: rgba(26, 32, 53, 0.8);
+            border: 1px solid var(--amber);
+            box-shadow: 0 10px 40px rgba(232, 160, 32, 0.1);
+            transform: scale(1.05); /* Makes the center card slightly larger */
+            z-index: 10;
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        /* The "Most Popular" badge placed at the top of the center card */
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--amber);
+            color: var(--ink);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Card titles (e.g., "Citizen", "Deep Insight") */
+        .tier-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* The big price number */
+        .price {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 800;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* The currency symbol (৳) */
+        .price span.currency {
+            font-size: 1.5rem;
+            vertical-align: top;
+            margin-right: 0.2rem;
+            color: var(--amber);
+        }
+
+        /* The billing cycle (e.g., "/ report", "/ month") */
+        .price span.cycle {
+            font-size: 1rem;
+            color: rgba(232, 228, 220, 0.5);
+            font-weight: 400;
+        }
+
+        /* A short description below the price */
+        .tier-desc {
+            font-size: 0.9rem;
+            color: rgba(232, 228, 220, 0.65);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        /* The list of features for each tier */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-grow: 1; /* Pushes the button to the bottom if list is short */
+        }
+
+        /* Individual feature items */
+        .feature-list li {
+            font-size: 0.9rem;
+            color: rgba(232, 228, 220, 0.8);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        /* The checkmark icon next to features */
+        .feature-list li::before {
+            content: '✓';
+            color: #2dd4a4; /* Teal color for success */
+            font-weight: 800;
+        }
+
+        /* Features that are not included in the free tier (crossed out) */
+        .feature-list li.disabled {
+            color: rgba(232, 228, 220, 0.3);
+            text-decoration: line-through;
+        }
+        
+        .feature-list li.disabled::before {
+            content: '×';
+            color: rgba(232, 228, 220, 0.3);
+        }
+
+        /* Full-width button inside the card */
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Mobile adjustments */
+        @media(max-width: 900px) {
+            .pricing-card.popular {
+                transform: scale(1); /* Removes the scale effect on mobile so it fits the screen */
+            }
+            .pricing-card.popular:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-logo" href="index.html"><span>Nagorik</span>Hub</a>
+        <ul class="nav-links">
+            <li><a href="listings.html">Explore</a></li>
+            <li><a href="index.html#features">Features</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn-ghost">Login</a>
+            <a href="dashboard.html" class="btn-amber">Dashboard →</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        
+        <div class="pricing-header">
+            <span style="color: var(--amber); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.8rem;">Transparent Pricing</span>
+            <h1>Intelligence for every decision.</h1>
+            <p style="color: rgba(232,228,220,0.65); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Whether you are browsing for your next home or managing a portfolio of properties, choose the plan that fits your needs.</p>
+        </div>
+
+        <div class="pricing-grid">
+            
+            <div class="pricing-card">
+                <h3 class="tier-name">Citizen</h3>
+                <div class="price"><span class="currency">৳</span>0<span class="cycle"> / forever</span></div>
+                <p class="tier-desc">Essential insights to help you browse neighborhoods and view basic scores.</p>
+                
+                <ul class="feature-list">
+                    <li>Access to all property listings</li>
+                    <li>Basic Livability Score display</li>
+                    <li>Basic Tutor Confidence Score</li>
+                    <li>Verified utility badges</li>
+                    <li class="disabled">Full utility & safety history</li>
+                    <li class="disabled">AI RAG Chatbot Assistant</li>
+                    <li class="disabled">6-month rent prediction trend</li>
+                </ul>
+                
+                <a href="listings.html" class="btn-large outline btn-full">Start Browsing</a>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <h3 class="tier-name">Deep Insight</h3>
+                <div class="price"><span class="currency">৳</span>49<span class="cycle"> / report</span></div>
+                <p class="tier-desc">Unlock a single, comprehensive AI report for a specific property you are serious about.</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Everything in Citizen, plus:</strong></li>
+                    <li>Full utility history & outage tracking</li>
+                    <li>Detailed neighborhood risk breakdown</li>
+                    <li>6-month AI rent prediction trend</li>
+                    <li><strong>Unlimited RAG Chatbot queries</strong> for this specific property</li>
+                    <li>Downloadable PDF summary</li>
+                </ul>
+                
+                <a href="listings.html" class="btn-large amber btn-full">Unlock a Report</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="tier-name">Pro Network</h3>
+                <div class="price"><span class="currency">৳</span>499<span class="cycle"> / month</span></div>
+                <p class="tier-desc">Designed for landlords and brokers who want to verify their listings and get leads.</p>
+                
+                <ul class="feature-list">
+                    <li>Unlimited Deep Reports</li>
+                    <li>Submit properties for "AI Verified" badge</li>
+                    <li>Priority listing placement in search</li>
+                    <li>Direct tenant lead generation</li>
+                    <li>Market trend analytics dashboard</li>
+                    <li>Dedicated support</li>
+                </ul>
+                
+                <a href="#" class="btn-large outline btn-full">Join the Waitlist</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+            <p>© 2026 NagorikHub. Built for Bangladesh's Rental Market.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
